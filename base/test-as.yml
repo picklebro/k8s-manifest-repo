@@ -1,0 +1,29 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: test-as
+  namespace: default
+spec:
+  minReplicas: 1 # 최소 레플리카 수
+  maxReplicas: 100 # 최대 레플리카 수
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: test-nginx
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Pods
+        value: 3 # 스케일 다운 시 파드는 최소 1개가 남도록 설정합니다.
+        periodSeconds: 60 # 스케일 다운을 시도할 주기를 지정합니다. (기본값: 300초)
+      - type: Percent
+        value: 10
+        periodSeconds: 60

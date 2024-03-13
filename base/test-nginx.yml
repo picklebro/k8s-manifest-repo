@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-nginx
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: default
+  template:
+    metadata:
+      labels:
+        app: default
+    spec:
+      containers:
+        - name: test-nginx
+          image: 992382362423.dkr.ecr.ap-northeast-2.amazonaws.com/eks-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+            cpu: 500m
+            requests:
+            cpu: 250m
