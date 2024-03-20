@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-nginx
+  name: nginx-server
   namespace: default
 spec:
   selector:
@@ -13,7 +13,7 @@ spec:
         app: default
     spec:
       containers:
-        - name: test-nginx
+        - name: nginx-server
           image: 992382362423.dkr.ecr.ap-northeast-2.amazonaws.com/eks-frontend:latest
           imagePullPolicy: Always
           ports:
